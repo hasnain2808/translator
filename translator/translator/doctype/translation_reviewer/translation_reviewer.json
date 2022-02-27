@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "autoname": "format:{user}:{language}",
+ "creation": "2022-02-25 21:22:13.100234",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "user",
+  "language",
+  "status",
+  "column_break_4",
+  "reason"
+ ],
+ "fields": [
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "language",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Language",
+   "options": "Language",
+   "reqd": 1
+  },
+  {
+   "default": "Review Pending",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_list_view": 1,
+   "label": "Status",
+   "no_copy": 1,
+   "options": "Review Pending\nApproved\nRejected",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "description": "Explain in detail why do you think you are capable to become a reviewer for the specific language. Add your qualifications, work examples, background, etc. ",
+   "fieldname": "reason",
+   "fieldtype": "Text Editor",
+   "label": "Why should you be a reviewer?",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-02-27 18:46:05.193944",
+ "modified_by": "Administrator",
+ "module": "Translator",
+ "name": "Translation Reviewer",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "track_seen": 1
+}
