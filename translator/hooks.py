@@ -15,6 +15,10 @@ web_include_css = [
 	"/assets/translator/css/custom.css",
 ]
 
+website_route_rules = [
+	{"from_route": "/frontend/<path:app_path>", "to_route": "frontend"},
+]
+
 
 doc_events = {
 	"User": {

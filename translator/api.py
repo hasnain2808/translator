@@ -98,3 +98,8 @@ def upvote_translation(translation_id, user_email, site):
 @frappe.whitelist(allow_guest=True)
 def get_contribution_status(translation_id, user_email=None, site=None):
 	return frappe.get_doc('Translated Message', translation_id)
+
+
+@frappe.whitelist(allow_guest=True)
+def get_apps():
+	return frappe.get_all('Translator App', fields=['name', 'app_name', 'logo', 'description'])

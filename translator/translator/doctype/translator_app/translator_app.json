@@ -8,7 +8,9 @@
  "field_order": [
   "app_name",
   "repository_owner",
-  "sources"
+  "logo",
+  "sources",
+  "description"
  ],
  "fields": [
   {
@@ -27,6 +29,16 @@
    "fieldname": "repository_owner",
    "fieldtype": "Data",
    "label": "Repository Owner"
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Description"
   }
  ],
  "links": [
@@ -35,7 +47,7 @@
    "link_fieldname": "translator_app"
   }
  ],
- "modified": "2022-03-04 17:27:26.817134",
+ "modified": "2022-03-11 13:44:49.782270",
  "modified_by": "Administrator",
  "module": "Translator",
  "name": "Translator App",

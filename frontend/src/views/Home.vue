@@ -1,23 +1,6 @@
-<template>
-	<div>
-		<Navbar />
-		<router-view />
-	</div>
-</template>
-
-<script>
-import Navbar from './components/Navbar.vue';
-
-export default {
-	components: {
-		Navbar,
-	},
-	inject: ['$auth'],
-};
-</script>
 
 
-<!-- <template>
+ <template>
   <Button @click="ping">Click me</Button>
 
   <div class="p-4 grid grid-cols-2 gap-4">
@@ -30,10 +13,10 @@ export default {
   </div>
 
   <p>{{ $resources.ping.data }}</p>
-</template> -->
+</template>
 
 
-<!--<script>
+<script>
 import { Button, Alert, Card } from "frappe-ui";
 export default {
   components: {
@@ -61,4 +44,4 @@ export default {
     },
   },
 };
-</script>-->
+</script>

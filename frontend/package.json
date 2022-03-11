@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build --base=/assets/translator/frontend/ && yarn copy-html-entry",
+    "copy-html-entry": "cp ../translator/public/frontend/index.html ../translator/www/frontend.html",
+    "serve": "vite preview"
   },
   "dependencies": {
     "frappe-ui": "^0.0.11",
