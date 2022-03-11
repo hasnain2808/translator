@@ -1,7 +1,7 @@
 <template>
 	<CardDetails :showDetails="showDetails">
 
-		<div class="px-6 py-">
+		<div class="px-6 py-5">
 			<div class="flex items-baseline justify-between">
 				<div class="flex items-baseline space-x-2">
 					<h2 class="text-xl font-semibold">{{ title }}</h2>
