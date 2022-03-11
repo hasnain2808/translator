@@ -103,3 +103,37 @@ def get_contribution_status(translation_id, user_email=None, site=None):
 @frappe.whitelist(allow_guest=True)
 def get_apps():
 	return frappe.get_all('Translator App', fields=['name', 'app_name', 'logo', 'description'])
+
+@frappe.whitelist(allow_guest=True)
+def get_app(name):
+	return frappe.get_all('Translator App', fields=['name', 'app_name', 'logo', 'description'], filters={
+		"name": name
+	})[0]
+
+@frappe.whitelist(allow_guest=True)
+def get_reviewer_applications():
+
+	if frappe.session.user == 'Administrator':
+		return frappe.get_all("Translation Reviewer", 
+			filters={"status": "Review Pending"},
+			fields=['language', 'user', 'name', 'creation']
+		)
+
+	reviewer_for_languages = frappe.get_all("Translation Reviewer", filters= {
+			"user": frappe.session.user,
+			"status": "Approved"
+		}, fields = ["language"], pluck=["language"])
+
+
+	return frappe.get_all("Translation Reviewer",
+			filters={"status": "Review Pending"},
+			fields=['language', 'user', 'creation', 'name', "linkedin_url", 'reason',
+				"github_url", "portfolio_url", "language_certification_url"]
+		)
+
+@frappe.whitelist(allow_guest=True)
+def get_reviewer_application(name):
+	if not name:
+		frappe.get_last_doc("Translation Reviewer")
+	return frappe.get_doc("Translation Reviewer", name)
+

@@ -35,13 +35,11 @@
 
 <script>
 import AppCard from '@/components/AppCard.vue';
-import ErrorMessage from '@/components/ErrorMessage.vue';
 
 export default {
 	name: 'Apps',
 	components: {
 		AppCard,
-		ErrorMessage
 	},
 	activated() {
 		this.$resources.apps.fetch();

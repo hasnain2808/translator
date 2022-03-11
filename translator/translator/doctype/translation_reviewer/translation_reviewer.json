@@ -10,6 +10,10 @@
   "language",
   "status",
   "column_break_4",
+  "linkedin_url",
+  "github_url",
+  "portfolio_url",
+  "language_certification_url",
   "reason"
  ],
  "fields": [
@@ -44,18 +48,43 @@
   {
    "description": "Explain in detail why do you think you are capable to become a reviewer for the specific language. Add your qualifications, work examples, background, etc. ",
    "fieldname": "reason",
-   "fieldtype": "Text Editor",
+   "fieldtype": "Text",
    "label": "Why should you be a reviewer?",
    "reqd": 1
   },
   {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "linkedin_url",
+   "fieldtype": "Data",
+   "label": "Linkedin URL",
+   "options": "URL"
+  },
+  {
+   "fieldname": "github_url",
+   "fieldtype": "Data",
+   "label": "Github URL",
+   "options": "URL"
+  },
+  {
+   "fieldname": "portfolio_url",
+   "fieldtype": "Data",
+   "label": "Portfolio URL",
+   "options": "URL"
+  },
+  {
+   "description": "Widely Known Certifications like Goethe-Institut (German)\nFrench(Dipl\u00f4me Initial de Langue Fran\u00e7aise) , Duolingo ",
+   "fieldname": "language_certification_url",
+   "fieldtype": "Data",
+   "label": "Language Certification URL",
+   "options": "URL"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-02-27 18:46:05.193944",
+ "modified": "2022-03-12 00:58:22.915265",
  "modified_by": "Administrator",
  "module": "Translator",
  "name": "Translation Reviewer",

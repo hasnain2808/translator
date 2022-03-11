@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import registerRoutes from './register';
 import appsRoutes from './apps';
-// import purchaseRoutes from './purchase';
+import reviewersRoutes from './reviewers';
 
 const routes = [
 	{
@@ -15,6 +15,7 @@ const routes = [
 	},
 	...registerRoutes,
 	...appsRoutes,
+	...reviewersRoutes,
 ];
 
 const router = createRouter({

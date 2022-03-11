@@ -43,6 +43,25 @@
 								>
 							</router-link>
 							<router-link
+								to="/reviewers"
+								v-slot="{ href, route, navigate, isActive }"
+							>
+								<a
+									:href="href"
+									:class="[
+										`px-3
+										py-2
+										rounded-md
+										text-sm
+										font-medium`,
+										isActive
+											? 'bg-gray-900 text-white'
+											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+									]"
+									>Reviewers</a
+								>
+							</router-link>
+							<router-link
 								to="/register"
 								v-slot="{ href, route, navigate, isActive }"
 							>

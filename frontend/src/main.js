@@ -1,4 +1,16 @@
-import { FrappeUI, Button, Alert } from "frappe-ui";
+import {
+	FrappeUI,
+	Button,
+	Input,
+	ErrorMessage,
+	Dialog,
+	FeatherIcon,
+	Alert,
+	Badge,
+	createCall,
+	Card
+  } from 'frappe-ui'
+
 import { createApp, reactive } from 'vue';
 
 import App from "./App.vue";
@@ -19,9 +31,14 @@ app.provide('$call', call);
 app.provide('$account', account);
 
 app.component("Button", Button);
+app.component("Input", Input);
+app.component("ErrorMessage", ErrorMessage);
+app.component("Dialog", Dialog);
+app.component("FeatherIcon", FeatherIcon);
 app.component("Alert", Alert);
-
-
+app.component("Badge", Badge);
+app.component("createCall", createCall);
+app.component("Card", Card);
 
 // Configure route gaurds
 router.beforeEach(async (to, from, next) => {
