@@ -186,3 +186,13 @@ def get_application_stats(app_name, lang):
 		frappe._dict({ 'name': 'Total Strings', 'stat': get_strings_count(app_name)[0][0] }),
 		frappe._dict({ 'name': 'Translated Strings', 'stat': get_translation_count(app_name, lang)[0][0] }),
 	]
+
+@frappe.whitelist(allow_guest=True)
+def get_top_contributors(lang):
+	return frappe.db.get_all('Translated Message',
+		fields=['count(name) as count', 'contributor_name'],
+		filters={'contributor_name': ('is', 'set'), 'contributor_email': ('!=', 'Administrator'), 'language': lang},
+		group_by='contributor_email',
+		order_by='count desc',
+		limit=10
+)

@@ -34,7 +34,6 @@
    "fieldtype": "Link",
    "label": "Source",
    "options": "Source Message",
-   "read_only": 1,
    "reqd": 1,
    "search_index": 1
   },
@@ -95,7 +94,7 @@
  ],
  "icon": "icon-comment",
  "links": [],
- "modified": "2022-02-27 18:21:43.664105",
+ "modified": "2022-03-15 01:49:56.438702",
  "modified_by": "Administrator",
  "module": "Translator",
  "name": "Translated Message",
