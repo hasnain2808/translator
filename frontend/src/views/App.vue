@@ -1,21 +1,32 @@
 <template>
 	<div class="mt-10">
 		<div class="px-4 sm:px-8" v-if="app">
-			<div class="pb-3">
+			<div >
 				<div class="text-base text-gray-700">
 					<router-link to="/apps" class="hover:text-gray-800">
 						← Back to Apps
 					</router-link>
 				</div>
 				<div
-					class="flex flex-col space-y-3 md:flex-row md:items-baseline md:justify-between md:space-y-0"
+					class="flex flex-col space-y-3 md:flex-row  md:justify-between md:space-y-0 py-4"
 				>
-					<div class="mt-2 flex items-center">
-
+					<div class="flex" >
+						<div>
+							<Avatar
+								class="shrink-0"
+								size="lg"
+								shape="square"
+								:imageURL="app.logo"
+								:label="app.app_name"
+							/>
+						</div>
+						<div class="flex items-center mx-2">
+							<h1 class="text-2xl mb-0  font-bold">{{ app.app_name }}</h1>
+						</div>
 					</div>
-					<div v-if="bench.status == 'Active'">
-						<Button icon-left="plus" :route="`/${app.name}/new`">
-							New App
+					<div class="flex items-center">
+						<Button icon-left="plus">
+							Become a Reviewer
 						</Button>
 					</div>
 				</div>
@@ -31,12 +42,14 @@
 
 <script>
 import Tabs from '@/components/Tabs.vue';
+import Avatar from '@/components/Avatar.vue';
 
 export default {
 	name: 'App',
-	props: ['AppName'],
+	props: ['appName'],
 	components: {
-		Tabs
+		Tabs,
+		Avatar
 	},
 	resources: {
 		app() {
@@ -48,13 +61,7 @@ export default {
 				},
 				auto: true
 			};
-		}
-	},
-	activated() {
-	},
-	deactivated() {
-	},
-	methods: {
+		},
 
 	},
 	computed: {
@@ -73,7 +80,20 @@ export default {
 				});
 			}
 			return [];
+		},
+		app() {
+			if (this.$resources.app.data && !this.$resources.app.loading) {
+				return this.$resources.app.data;
+			}
 		}
-	}
+	},
+	activated() {
+		let tabRoute = subRoute => `/apps/${this.appName}/${subRoute}`;
+		console.log("activated");
+		console.log(this.tabs);
+		if (!this.$route.path.split('/')[3]) {
+			this.$router.replace(tabRoute(this.tabs[0].route));
+		}
+	},
 };
 </script>

@@ -3,5 +3,8 @@
 *.egg-info
 *.swp
 tags
+translator/public/translator
+translator/www/translator.html
+node_modules
 translator/public/frontend
 translator/www/frontend.html

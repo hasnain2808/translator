@@ -1,6 +1,4 @@
 <template>
-		<div class="container mx-auto">
-
 	<div>
 		<CardWithDetails
 			title="Pending Applications"
@@ -53,7 +51,6 @@
 				/>
 			</template>
 		</CardWithDetails>
-	</div>
 	</div>
 </template>
 

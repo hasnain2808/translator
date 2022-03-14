@@ -5,12 +5,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=/assets/translator/frontend/ && yarn copy-html-entry",
-    "copy-html-entry": "cp ../translator/public/frontend/index.html ../translator/www/frontend.html",
+    "copy-html-entry": "cp ../translator/public/translator/index.html ../translator/www/translator.html",
     "serve": "vite preview"
   },
   "dependencies": {
     "frappe-ui": "^0.0.11",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "@headlessui/vue": "^1.4.2",
+    "@heroicons/vue": "^1.0.5",
+    "vue-router": "^4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",

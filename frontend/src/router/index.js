@@ -19,8 +19,7 @@ const routes = [
 ];
 
 const router = createRouter({
-	base: '/frontend/',
-	history: createWebHistory(),
+	history: createWebHistory('/translator/'),
 	routes,
 });
 

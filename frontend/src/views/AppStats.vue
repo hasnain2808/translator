@@ -1,47 +1,60 @@
 
 
  <template>
-  <Button @click="ping">Click me</Button>
+  <SimpleComboBox ref="SimpleCombobox" @languageSelected="languageSelected"></SimpleComboBox>
 
-  <div class="p-4 grid grid-cols-2 gap-4">
-    <Card title="Heading" subtitle="Sub text">
-      <div class="text-base">Card content</div>
-    </Card>
-    <Card title="Heading" subtitle="Sub text">
-      <div class="text-base">Card content</div>
-    </Card>
-  </div>
+  <NumberCard :stats="stats"></NumberCard>
 
-  <p>{{ $resources.ping.data }}</p>
+<div v-if="this.$refs.SimpleCombobox">
+	{{ this.$refs.SimpleCombobox.selectedLanguage}}
+	</div>
 </template>
 
 
 <script>
-import { Button, Alert, Card } from "frappe-ui";
+
+import NumberCard from '@/components/NumberCard.vue';
+import SimpleComboBox from '@/components/SimpleComboBox.vue';
+import {  ref } from 'vue'
+
+
 export default {
   components: {
-    Button,
-    Alert,
-    Card,
+    NumberCard,
+	SimpleComboBox
+  },
+  props: ["app"],
+  setup() {
+	const lang = ref()
+	return { lang }
   },
   resources: {
-    ping() {
-      return {
-        method: "ping",
-        onSuccess(d) {
-          console.log(d);
-        },
-        auto: true,
-        onError(d) {
-          console.error(d);
-        },
-      };
-    },
+		stats() {
+			this.lang = this.lang ?  this.lang : 'de'
+			return {
+				method: 'translator.api.get_application_stats',
+				params: {
+					app_name: this.app.name,
+					lang: this.lang
+				},
+				auto: true
+			};
+
+		}
   },
   methods: {
-    ping() {
-      this.$resources.ping.fetch();
-    },
+	  languageSelected(selectedLanguage){
+		  this.lang = selectedLanguage.language_code
+		  this.$resources.stats.fetch();
+		  console.log(this.$resources.stats)
+	  }
   },
+  computed: {
+		stats() {
+			if (this.$resources.stats.data && !this.$resources.stats.loading) {
+				return this.$resources.stats.data;
+			}
+		}
+  }
 };
 </script>

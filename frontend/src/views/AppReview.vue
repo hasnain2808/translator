@@ -1,47 +1,32 @@
 
 
  <template>
-  <Button @click="ping">Click me</Button>
+  <SimpleComboBox ref="SimpleCombobox" @languageSelected="languageSelected"></SimpleComboBox>
 
-  <div class="p-4 grid grid-cols-2 gap-4">
-    <Card title="Heading" subtitle="Sub text">
-      <div class="text-base">Card content</div>
-    </Card>
-    <Card title="Heading" subtitle="Sub text">
-      <div class="text-base">Card content</div>
-    </Card>
-  </div>
-
-  <p>{{ $resources.ping.data }}</p>
 </template>
-
 
 <script>
 import { Button, Alert, Card } from "frappe-ui";
+import {  ref } from 'vue'
+import SimpleComboBox from '@/components/SimpleComboBox.vue';
+
+
 export default {
   components: {
     Button,
     Alert,
     Card,
+    SimpleComboBox
   },
-  resources: {
-    ping() {
-      return {
-        method: "ping",
-        onSuccess(d) {
-          console.log(d);
-        },
-        auto: true,
-        onError(d) {
-          console.error(d);
-        },
-      };
-    },
+  props: ["app"],
+  setup() {
+    const lang = ref()
+    return { lang }
   },
   methods: {
-    ping() {
-      this.$resources.ping.fetch();
-    },
-  },
+	  languageSelected(selectedLanguage){
+		  this.lang = selectedLanguage.language_code
+	  }
+  }
 };
 </script>

@@ -1,5 +1,4 @@
 <template>
-		<div class="container mx-auto">
 
 	<div class="mt-8">
 
@@ -30,7 +29,6 @@
 		</div>
 	</div>
 	</div>
-	</div>
 </template>
 
 <script>
@@ -54,7 +52,7 @@ export default {
 	},
 	methods: {
 		routeToAppPage(appName) {
-			this.$router.push(`/apps/${appName}`);
+			this.$router.push(`/apps/${appName}/stats`);
 		}
 	}
 };

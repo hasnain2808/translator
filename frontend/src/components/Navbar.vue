@@ -195,6 +195,9 @@
 						"
 					>
 						<span class="sr-only">Open main menu</span>
+
+						<MenuIcon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
+						<XIcon v-else class="block h-6 w-6" aria-hidden="true" />
 					</DisclosureButton>
 				</div>
 			</div>
@@ -315,6 +318,8 @@ import {
 	MenuItems,
 } from '@headlessui/vue';
 
+import { BellIcon, MenuIcon, XIcon } from '@heroicons/vue/outline';
+
 
 export default {
 	components: {
@@ -325,6 +330,9 @@ export default {
 		MenuButton,
 		MenuItem,
 		MenuItems,
+		BellIcon,
+		MenuIcon,
+		XIcon,
 	},
 	inject: ['$auth'],
 };

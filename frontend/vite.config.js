@@ -20,7 +20,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: '../translator/public/frontend',
+    outDir: '../translator/public/translator',
     emptyOutDir: true,
     target: 'es2015',
   },

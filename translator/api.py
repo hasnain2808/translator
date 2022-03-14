@@ -137,3 +137,64 @@ def get_reviewer_application(name):
 		frappe.get_last_doc("Translation Reviewer")
 	return frappe.get_doc("Translation Reviewer", name)
 
+
+def get_strings_count(app_name):
+	SourceMessagePosition = frappe.qb.DocType('Source Message Position')
+	SourceMessage = frappe.qb.DocType('Source Message')
+
+	from frappe.query_builder.functions import Count
+	count_names = Count(SourceMessage.name).as_("count_name")
+
+	return (frappe.qb.from_(SourceMessage)
+		.join(SourceMessagePosition)
+		.on(SourceMessage.name == SourceMessagePosition.parent )
+		.where(SourceMessagePosition.app == app_name)
+		.select(count_names)
+		.distinct()
+	).run()
+
+def get_translation_count(app_name, lang):
+	return frappe.db.sql("""
+		SELECT count(res.source_name) FROM (
+			SELECT
+				DISTINCT source.name AS source_name,
+				source.message AS source_text,
+				source.context AS context,
+				translated.translated AS translated_text,
+				CASE WHEN translated.translation_source = 'Google Translated' THEN 1 ELSE 0 END AS translated_by_google,
+				translated.contributor_name,
+				translated.contributor_email,
+				translated.modified_by,
+				source.creation
+			FROM `tabSource Message` source
+				LEFT JOIN `tabTranslated Message` AS translated
+					ON (
+						source.name=translated.source
+						AND translated.language = %(language)s
+						AND (translated.contribution_status='Verified' OR translated.translation_source != 'Community Contribution')
+					)
+				LEFT JOIN `tabSource Message Position` AS position
+					ON (
+						source.name=position.parent
+					)
+			WHERE
+				source.disabled != 1
+				AND position.app = %(app)s
+			HAVING `translated_text` {} NULL
+			ORDER BY
+				translated_by_google
+		) as res
+	""".format(
+			'IS'
+		), dict(language=lang, app=app_name), as_dict=0)
+
+def get_translation_percentage(app_name, lang):
+	return (get_translation_count(app_name, lang)[0][0]/ get_strings_count(app_name)[0][0] ) * 100
+
+@frappe.whitelist(allow_guest=True)
+def get_application_stats(app_name, lang):
+	return [
+		frappe._dict({ 'name': 'Translation Completed', 'stat': f'{get_translation_percentage(app_name, lang)}%' }),
+		frappe._dict({ 'name': 'Total Strings', 'stat': get_strings_count(app_name)[0][0] }),
+		frappe._dict({ 'name': 'Translated Strings', 'stat': get_translation_count(app_name, lang)[0][0] }),
+	]
