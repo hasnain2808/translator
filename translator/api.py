@@ -155,23 +155,14 @@ def get_strings_count(app_name):
 
 def get_translation_count(app_name, lang):
 	return frappe.db.sql("""
-		SELECT count(res.source_name) FROM (
 			SELECT
-				DISTINCT source.name AS source_name,
-				source.message AS source_text,
-				source.context AS context,
-				translated.translated AS translated_text,
-				CASE WHEN translated.translation_source = 'Google Translated' THEN 1 ELSE 0 END AS translated_by_google,
-				translated.contributor_name,
-				translated.contributor_email,
-				translated.modified_by,
-				source.creation
+				COUNT(DISTINCT source.name) AS source_name
 			FROM `tabSource Message` source
 				LEFT JOIN `tabTranslated Message` AS translated
 					ON (
 						source.name=translated.source
 						AND translated.language = %(language)s
-						AND (translated.contribution_status='Verified' OR translated.translation_source != 'Community Contribution')
+						AND (translated.contribution_status='Verified')
 					)
 				LEFT JOIN `tabSource Message Position` AS position
 					ON (
@@ -180,15 +171,12 @@ def get_translation_count(app_name, lang):
 			WHERE
 				source.disabled != 1
 				AND position.app = %(app)s
-			HAVING `translated_text` {} NULL
-			ORDER BY
-				translated_by_google
-		) as res
+				AND translated.translation_source != 'Google Translated'
 	""".format(
-			'IS'
 		), dict(language=lang, app=app_name), as_dict=0)
 
 def get_translation_percentage(app_name, lang):
+	print(lang)
 	return (get_translation_count(app_name, lang)[0][0]/ get_strings_count(app_name)[0][0] ) * 100
 
 @frappe.whitelist(allow_guest=True)
