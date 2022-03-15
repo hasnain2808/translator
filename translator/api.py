@@ -128,12 +128,24 @@ def get_reviewer_applications(start):
 
 
 	return frappe.get_all("Translation Reviewer",
-			filters=[["status",'=', "Review Pending"]["language",'in', reviewer_for_languages ]],
+			filters=[["status",'=', "Review Pending"],["language",'in', reviewer_for_languages ]],
 			fields=['language', 'user', 'creation', 'name', "linkedin_url", 'reason',
 				"github_url", "portfolio_url", "language_certification_url"],
 			start=start,
 			limit=10
 		)
+
+@frappe.whitelist(allow_guest=True)
+def get_your_applications(start):
+	return frappe.get_all("Translation Reviewer",
+			filters=[["user",'=', frappe.session.user]],
+			fields=['language', 'user', 'creation', 'name', "linkedin_url", 'reason',
+				"github_url", "portfolio_url", "language_certification_url", 'status'],
+			start=start,
+			limit=10,
+			order_by="creation desc"
+		)
+
 
 @frappe.whitelist(allow_guest=True)
 def get_pending_reviewer_count():
@@ -155,8 +167,6 @@ def get_pending_reviewer_count():
 
 @frappe.whitelist(allow_guest=True)
 def get_reviewer_application(name):
-	if not name:
-		frappe.get_last_doc("Translation Reviewer")
 	return frappe.get_doc("Translation Reviewer", name)
 
 
@@ -282,3 +292,18 @@ def verify_reviewer(reviewer_name):
 def reject_reviewer(reviewer_name):
 	reviewer = frappe.get_doc('Translation Reviewer', reviewer_name)
 	reviewer.reject()
+
+@frappe.whitelist()
+def become_a_reviewer(language, linkedin_url, github_url, portfolio_url, reason):
+	print(language, linkedin_url, github_url, portfolio_url, reason)
+	translation_reviewer = frappe.get_doc({
+		'doctype': 'Translation Reviewer',
+		'user': frappe.session.user,
+		'language': language,
+		'linkedin_url': linkedin_url,
+		'github_url': github_url,
+		'portfolio_url':portfolio_url,
+		'reason':reason
+	})
+
+	return translation_reviewer.save()

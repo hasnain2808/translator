@@ -30,7 +30,7 @@
 							<router-link
 								to="/reviewers"
 								v-slot="{ href, route, navigate, isActive }"
-								v-if="pending_reviewer_count"
+								v-if="$auth.isLoggedIn && pending_reviewer_count"
 							>
 								<a
 									:href="href"
@@ -48,8 +48,9 @@
 								</a>
 							</router-link>
 							<router-link
-								to="/register"
+								to="/your-applications"
 								v-slot="{ href, route, navigate, isActive }"
+								v-if="$auth.isLoggedIn"
 							>
 								<a
 									:href="href"
@@ -63,8 +64,8 @@
 											? 'bg-gray-900 text-white'
 											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
 									]"
-									>My Purchases</a
-								>
+									>Your Applications
+								</a>
 							</router-link>
 						</div>
 					</div>

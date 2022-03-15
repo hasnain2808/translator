@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../views/Home.vue';
-import registerRoutes from './register';
 import appsRoutes from './apps';
 import reviewersRoutes from './reviewers';
 
@@ -13,9 +12,22 @@ const routes = [
 			isPublicPage: false,
 		},
 	},
-	...registerRoutes,
 	...appsRoutes,
 	...reviewersRoutes,
+	{
+		path: '/your-applications',
+		name: 'YourApplications',
+		component: () => import(/* webpackChunkName: "app" */ '../views/YourApplications.vue'),
+		meta: {
+			isPublicPage: false,
+		},
+	},
+	{
+		path: '/your-applications/:reviewerName',
+		name: 'YourApplicationsDetails',
+		component: () => import(/* webpackChunkName: "app" */ '../views/YourApplications.vue'),
+		props: true,
+	}
 ];
 
 const router = createRouter({

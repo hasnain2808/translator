@@ -8,7 +8,7 @@ import {
 	Alert,
 	Badge,
 	createCall,
-	Card
+	Card,
   } from 'frappe-ui'
 
 import { createApp, reactive } from 'vue';
@@ -19,6 +19,7 @@ import router from './router';
 import Auth from './controllers/auth';
 import call from './controllers/call';
 import Account from './controllers/account';
+import { createDialog } from './utils/dialogs'
 
 const app = createApp(App)
 const auth = reactive(new Auth());
@@ -87,6 +88,7 @@ router.beforeEach(async (to, from, next) => {
 	}
 });
 
+app.config.globalProperties.$dialog = createDialog
 app.mount("#app");
 
 

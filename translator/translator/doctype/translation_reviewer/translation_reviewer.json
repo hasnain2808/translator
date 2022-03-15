@@ -37,12 +37,10 @@
    "default": "Review Pending",
    "fieldname": "status",
    "fieldtype": "Select",
-   "hidden": 1,
    "in_list_view": 1,
    "label": "Status",
    "no_copy": 1,
    "options": "Review Pending\nApproved\nRejected",
-   "read_only": 1,
    "reqd": 1
   },
   {
@@ -84,7 +82,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2022-03-12 00:58:22.915265",
+ "modified": "2022-03-15 22:17:52.077603",
  "modified_by": "Administrator",
  "module": "Translator",
  "name": "Translation Reviewer",

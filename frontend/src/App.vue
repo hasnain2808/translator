@@ -5,14 +5,18 @@
 		<router-view />
 	</div>
   </div>
+  <Dialogs />
+
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
+import { Dialogs } from '@/utils/dialogs'
 
 export default {
 	components: {
 		Navbar,
+		Dialogs
 	},
 	inject: ['$auth'],
   data() {

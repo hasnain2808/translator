@@ -25,7 +25,7 @@
 						</div>
 					</div>
 					<div class="flex items-center">
-						<Button icon-left="plus">
+						<Button icon-left="plus" @click="showBecomeReviewerDialog = true">
 							Become a Reviewer
 						</Button>
 					</div>
@@ -38,18 +38,41 @@
 			</Tabs>
 		</div>
 	</div>
+	<BecomeReviewerDialog
+    v-model:show="showBecomeReviewerDialog"
+    @success="
+      (reviewer) => {
+        showBecomeReviewerDialog = false
+        // $resources.teams.fetch()
+        // $router.push(`/${team.name}`)
+      }
+    "
+  />
 </template>
 
 <script>
+import {
+  Dialog,
+  DialogOverlay
+} from '@headlessui/vue'
 import Tabs from '@/components/Tabs.vue';
 import Avatar from '@/components/Avatar.vue';
+import BecomeReviewerDialog from '@/components/BecomeReviewerDialog.vue'
 
 export default {
 	name: 'App',
 	props: ['appName'],
 	components: {
 		Tabs,
-		Avatar
+		Avatar,
+		Dialog,
+		DialogOverlay,
+		BecomeReviewerDialog
+	},
+	data() {
+		return {
+			showBecomeReviewerDialog: false,
+		}
 	},
 	resources: {
 		app() {
