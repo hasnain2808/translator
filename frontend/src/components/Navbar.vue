@@ -1,28 +1,13 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
 	<Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+		<div class="lg:container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex items-center justify-between h-16">
 				<div class="flex items-center">
 					<div class="hidden sm:block sm:ml-6">
 						<div class="flex space-x-4">
 							<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-							<router-link to="/" v-slot="{ href, route, navigate, isActive }">
-								<a
-									:href="href"
-									:class="[
-										`px-3
-										py-2
-										rounded-md
-										text-sm
-										font-medium`,
-										isActive
-											? 'bg-gray-900 text-white'
-											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
-									]"
-									>Dashboard</a
-								>
-							</router-link>
+
 							<router-link
 								to="/apps"
 								v-slot="{ href, route, navigate, isActive }"
@@ -208,7 +193,7 @@
 				<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 				<DisclosureButton
 					as="a"
-					href="#"
+					href="/apps"
 					class="
 						bg-gray-900
 						text-white
@@ -219,7 +204,7 @@
 						text-base
 						font-medium
 					"
-					>Dashboard</DisclosureButton
+					>Apps</DisclosureButton
 				>
 			</div>
 			<div v-if="$auth.isLoggedIn" class="pt-4 pb-3 border-t border-gray-700">

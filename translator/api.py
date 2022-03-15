@@ -111,12 +111,14 @@ def get_app(name):
 	})[0]
 
 @frappe.whitelist(allow_guest=True)
-def get_reviewer_applications():
+def get_reviewer_applications(start):
 
 	if frappe.session.user == 'Administrator':
-		return frappe.get_all("Translation Reviewer", 
+		return frappe.get_all("Translation Reviewer",
 			filters={"status": "Review Pending"},
-			fields=['language', 'user', 'name', 'creation']
+			fields=['language', 'user', 'name', 'creation'],
+			start=start,
+			limit=10
 		)
 
 	reviewer_for_languages = frappe.get_all("Translation Reviewer", filters= {
@@ -126,9 +128,11 @@ def get_reviewer_applications():
 
 
 	return frappe.get_all("Translation Reviewer",
-			filters={"status": "Review Pending"},
+			filters=[["status",'=', "Review Pending"]["language",'in', reviewer_for_languages ]],
 			fields=['language', 'user', 'creation', 'name', "linkedin_url", 'reason',
-				"github_url", "portfolio_url", "language_certification_url"]
+				"github_url", "portfolio_url", "language_certification_url"],
+			start=start,
+			limit=10
 		)
 
 @frappe.whitelist(allow_guest=True)
@@ -176,7 +180,6 @@ def get_translation_count(app_name, lang):
 		), dict(language=lang, app=app_name), as_dict=0)
 
 def get_translation_percentage(app_name, lang):
-	print(lang)
 	return (get_translation_count(app_name, lang)[0][0]/ get_strings_count(app_name)[0][0] ) * 100
 
 @frappe.whitelist(allow_guest=True)
@@ -194,5 +197,41 @@ def get_top_contributors(lang):
 		filters={'contributor_name': ('is', 'set'), 'contributor_email': ('!=', 'Administrator'), 'language': lang},
 		group_by='contributor_email',
 		order_by='count desc',
-		limit=10
-)
+		limit=10)
+
+@frappe.whitelist(allow_guest=True)
+def get_translated_messsages_for_verification(lang, start):
+	if frappe.session.user == 'Administrator':
+		return frappe.get_all("Translated Message",
+			filters={"language": lang, "contribution_status": "Pending", 'translation_source': 'Community Contribution'},
+			fields=['name', 'source_message', 'translated'],
+			start=start,
+			limit=10
+		)
+
+	return frappe.db.get_all('Translated Message',
+		fields=['*'],
+		filters={'contributor_name': ('is', 'set'), 'contributor_email': ('!=', 'Administrator'), 'language': lang},
+		group_by='contributor_email',
+		order_by='count desc',
+		limit=10)
+
+
+@frappe.whitelist(allow_guest=True)
+def get_translated_messsage_details(translated_message_name):
+	translated = frappe.get_doc('Translated Message', translated_message_name)
+	source = frappe.get_doc('Source Message', translated.source)
+	return {
+		"source": source,
+		"translated": translated
+	}
+
+@frappe.whitelist()
+def verify_translated_messsage(translated_message_name):
+	translated = frappe.get_doc('Translated Message', translated_message_name)
+	translated.verify()
+
+@frappe.whitelist()
+def reject_translated_messsage(translated_message_name):
+	translated = frappe.get_doc('Translated Message', translated_message_name)
+	translated.reject()

@@ -19,8 +19,17 @@ export default [
 			},
 			{
 				path: 'review',
-				component: () => import('../views/AppReview.vue')
+				component: () => import('../views/AppReview.vue'),
+				name: 'AppReview',
+			},
+			{
+				path: 'review/:translatedMessageName',
+				name: 'ReviewTranslatedMessage',
+				component: () => import(/* webpackChunkName: "app" */ '../views/AppReview.vue'),
+				props: true
 			}
 		]
 	}
 ];
+
+

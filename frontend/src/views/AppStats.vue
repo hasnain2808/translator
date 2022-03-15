@@ -72,7 +72,7 @@ export default {
 
 		},
 		topContributors() {
-			this.lang = this.lang ?  this.lang : 'de'
+			this.lang = this.lang ?  this.lang : 'es'
 			return {
 				method: 'translator.api.get_top_contributors',
 				params: {

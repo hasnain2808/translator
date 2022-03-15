@@ -401,11 +401,16 @@ export default {
             return language.language_name.toLowerCase().includes(query.value.toLowerCase())
           })
     )
-
     return {
       query,
       selectedLanguage,
       filteredLanguage,
+    }
+  },
+  mounted() {
+    this.selectedLanguage = {
+      "language_code": "es",
+      "language_name": "Espa\u00f1ol"
     }
   },
   watch: {
