@@ -118,8 +118,7 @@ export default {
           }
         },
         onSuccess(reviewer) {
-          // this.teamName = ''
-          // this.$emit('success', team)
+          this.$emit('success', reviewer)
         },
       }
     },

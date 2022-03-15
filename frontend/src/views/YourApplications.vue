@@ -1,4 +1,9 @@
 <template>
+	<div class="flex items-center mt-4">
+		<Button icon-left="plus" @click="showBecomeReviewerDialog = true">
+			Become a Reviewer
+		</Button>
+	</div>
 	<div class='mt-4'>
 		<CardWithDetails
 			title="Your Applications"
@@ -52,12 +57,26 @@
 			</template>
 		</CardWithDetails>
 	</div>
+		<BecomeReviewerDialog
+    v-model:show="showBecomeReviewerDialog"
+    @success="
+      (reviewer) => {
+        showBecomeReviewerDialog = false
+        $resources.candidates.fetch()
+      }
+    "
+  />
 </template>
 
 <script>
+import {
+  Dialog,
+  DialogOverlay
+} from '@headlessui/vue'
 import CardWithDetails from '@/components/CardWithDetails.vue';
 import ListItem from '@/components/ListItem.vue';
 import YourApplicationDetail from '@/components/YourApplicationDetail.vue';
+import BecomeReviewerDialog from '@/components/BecomeReviewerDialog.vue'
 
 export default {
 	name: 'YourApplications',
@@ -65,11 +84,13 @@ export default {
 	components: {
 		CardWithDetails,
 		ListItem,
-		YourApplicationDetail
+		YourApplicationDetail,
+		BecomeReviewerDialog
 	},
 	data() {
 		return {
-			pageStart: 0
+			pageStart: 0,
+			showBecomeReviewerDialog: false,
 		};
 	},
 	resources: {

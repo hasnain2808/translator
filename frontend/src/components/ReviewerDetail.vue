@@ -7,8 +7,8 @@
 					<h2 class="text-xl font-semibold">{{ title }}</h2>
 				</div>
 				<div class="flex items-center space-x-2">
-					<Button class="bg-gray-100 hover:bg-gray-200 text-gray-900 focus:shadow-outline-gray" @click="approve">Reject</Button>
-					<Button class="bg-gradient-blue hover:bg-gradient-none hover:bg-blue-500 text-white focus:shadow-outline-blue" @click="reject">Approve</Button>
+					<Button class="bg-gray-100 hover:bg-gray-200 text-gray-900 focus:shadow-outline-gray" @click="reject">Reject</Button>
+					<Button class="bg-gradient-blue hover:bg-gradient-none hover:bg-blue-500 text-white focus:shadow-outline-blue" @click="approve">Approve</Button>
 				</div>
 			</div>
 		</div>
