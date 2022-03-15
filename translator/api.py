@@ -136,6 +136,24 @@ def get_reviewer_applications(start):
 		)
 
 @frappe.whitelist(allow_guest=True)
+def get_pending_reviewer_count():
+
+	if frappe.session.user == 'Administrator':
+		return frappe.db.count("Translation Reviewer",
+			filters={"status": "Review Pending"},
+		)
+
+	reviewer_for_languages = frappe.get_all("Translation Reviewer", filters= {
+			"user": frappe.session.user,
+			"status": "Approved"
+		}, fields = ["language"], pluck=["language"])
+
+
+	return frappe.db.count("Translation Reviewer",
+			filters=[["status",'=', "Review Pending"]["language",'in', reviewer_for_languages ]]
+		)
+
+@frappe.whitelist(allow_guest=True)
 def get_reviewer_application(name):
 	if not name:
 		frappe.get_last_doc("Translation Reviewer")
@@ -216,6 +234,25 @@ def get_translated_messsages_for_verification(lang, start):
 		order_by='count desc',
 		limit=10)
 
+@frappe.whitelist(allow_guest=True)
+def get_translated_messsages_for_verification_count():
+
+	if frappe.session.user == 'Administrator':
+		return frappe.db.count("Translated Message",
+			filters={"contribution_status": "Pending", 'translation_source': 'Community Contribution'},
+		)
+
+	reviewer_for_languages = frappe.get_all("Translation Reviewer", filters= {
+			"user": frappe.session.user,
+			"status": "Approved"
+		}, fields = ["language"], pluck=["language"])
+
+
+	return frappe.db.count('Translated Message',
+		filters=[["language",'in', reviewer_for_languages], ["contribution_status", '=', "Pending"], ['translation_source', '=' 'Community Contribution']]
+	)
+
+
 
 @frappe.whitelist(allow_guest=True)
 def get_translated_messsage_details(translated_message_name):
@@ -235,3 +272,13 @@ def verify_translated_messsage(translated_message_name):
 def reject_translated_messsage(translated_message_name):
 	translated = frappe.get_doc('Translated Message', translated_message_name)
 	translated.reject()
+
+@frappe.whitelist()
+def verify_reviewer(reviewer_name):
+	reviewer = frappe.get_doc('Translation Reviewer', reviewer_name)
+	reviewer.approve()
+
+@frappe.whitelist()
+def reject_reviewer(reviewer_name):
+	reviewer = frappe.get_doc('Translation Reviewer', reviewer_name)
+	reviewer.reject()

@@ -24,12 +24,13 @@
 											? 'bg-gray-900 text-white'
 											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
 									]"
-									>Apps</a
+									>Apps  <Badge v-if="translated_messsages_for_verification_count" status="Pending">{{translated_messsages_for_verification_count}}</Badge></a
 								>
 							</router-link>
 							<router-link
 								to="/reviewers"
 								v-slot="{ href, route, navigate, isActive }"
+								v-if="pending_reviewer_count"
 							>
 								<a
 									:href="href"
@@ -43,8 +44,8 @@
 											? 'bg-gray-900 text-white'
 											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
 									]"
-									>Reviewers</a
-								>
+									>Reviewers  <Badge status="Pending">{{pending_reviewer_count}}</Badge>
+								</a>
 							</router-link>
 							<router-link
 								to="/register"
@@ -320,5 +321,27 @@ export default {
 		XIcon,
 	},
 	inject: ['$auth'],
+	resources: {
+		reviewer_count() {
+			return {
+				method: 'translator.api.get_pending_reviewer_count',
+				auto: true
+			};
+		},
+		translated_messsages_for_verification_count() {
+			return {
+				method: 'translator.api.get_translated_messsages_for_verification_count',
+				auto: true
+			};
+		}
+	},
+	computed: {
+		pending_reviewer_count() {
+			return this.$resources.reviewer_count.data;
+		},
+		translated_messsages_for_verification_count() {
+			return this.$resources.translated_messsages_for_verification_count.data;
+		}
+	}
 };
 </script>
