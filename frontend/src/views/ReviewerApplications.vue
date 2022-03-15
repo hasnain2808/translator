@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class='mt-4'>
 		<CardWithDetails
 			title="Pending Applications"
 			:show-details="selectedCandidate"
@@ -48,6 +48,7 @@
 					:showDetails="selectedCandidate"
 					:loading="$resources.selectedCandidate.loading"
 					title="Reviewer Details"
+					@reviewerManaged="reviewerManaged"
 				/>
 			</template>
 		</CardWithDetails>
@@ -82,7 +83,12 @@ export default {
 				auto: true,
 				paged: true,
 				keepData: true,
-				default: []
+				default: [],
+				onSuccess() {
+					if (this.$resources.candidates.data[0]) {
+						this.$router.push({ name: 'ReviewersDetails', params: {reviewerName : this.$resources.candidates.data[0].name} });
+					}
+				},
 			};
 		},
 		selectedCandidate() {
@@ -100,6 +106,12 @@ export default {
 			};
 		}
 	},
+	methods: {
+	  reviewerManaged() {
+			this.$resources.candidates.reload()
+			this.$router.push({ name: 'Reviewers' })
+		}
+  	},
 	computed: {
 		selectedCandidate() {
 			return this.$resources.selectedCandidate.data;

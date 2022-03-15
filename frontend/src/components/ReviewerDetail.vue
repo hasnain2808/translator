@@ -7,8 +7,8 @@
 					<h2 class="text-xl font-semibold">{{ title }}</h2>
 				</div>
 				<div class="flex items-center space-x-2">
-					<Button class="bg-gray-100 hover:bg-gray-200 text-gray-900 focus:shadow-outline-gray" @click="ping">Reject</Button>
-					<Button class="bg-gradient-blue hover:bg-gradient-none hover:bg-blue-500 text-white focus:shadow-outline-blue" @click="ping">Approve</Button>
+					<Button class="bg-gray-100 hover:bg-gray-200 text-gray-900 focus:shadow-outline-gray" @click="approve">Reject</Button>
+					<Button class="bg-gradient-blue hover:bg-gradient-none hover:bg-blue-500 text-white focus:shadow-outline-blue" @click="reject">Approve</Button>
 				</div>
 			</div>
 		</div>
@@ -24,7 +24,7 @@
 		</div>
 		<div v-else>
 			<Loading v-if="loading" />
-			<span v-else class="text-base text-gray-600"> No item selected </span>
+			<span v-else class="text-base text-gray-600 px-6"> No item selected </span>
 		</div>
 
 
@@ -44,25 +44,51 @@ export default {
 		ListItem
 	},
 	inject: ['viewportWidth'],
-	  resources: {
-    ping() {
-      return {
-        method: "ping",
-        onSuccess(d) {
-          console.log(d);
-        },
-        auto: true,
-        onError(d) {
-          console.error(d);
-        },
-      };
-    },
+	resources: {
+
+		verify_reviewer() {
+			return {
+				method: 'translator.api.verify_reviewer',
+				auto: false,
+				validate() {
+					if (!this.showDetails.name) {
+						return 'Select a candidate first';
+					}
+				},
+				onSuccess() {
+					console.log("verified")
+					this.$emit('reviewerManaged')
+				}
+			}
+		},
+		reject_reviewer() {
+			return {
+				method: 'translator.api.reject_reviewer',
+				auto: false,
+				validate() {
+					if (!this.showDetails.name) {
+						return 'Select a candidate first';
+					}
+				},
+				onSuccess() {
+					console.log("rejected")
+					this.$emit('reviewerManaged')
+				}
+			}
+		}
   },
   methods: {
-    ping() {
-      this.$resources.ping.fetch();
-    },
-  },
+		approve() {
+			this.$resources.verify_reviewer.submit({
+				reviewer_name: this.showDetails.name
+			});
+		},
+		reject() {
+			this.$resources.reject_reviewer.submit({
+				reviewer_name: this.showDetails.name
+			});
+		}
+  	},
 };
 </script>
 
