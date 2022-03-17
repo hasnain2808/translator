@@ -5,6 +5,7 @@ import frappe
 from frappe.model.document import Document
 from frappe import _
 
+class AlreadyApplied(frappe.ValidationError): pass
 class TranslationReviewer(Document):
 
 	def validate(self):
@@ -16,6 +17,9 @@ class TranslationReviewer(Document):
 				reference_doctype = self.doctype,
 				reference_name = self.name,
 			)
+
+		if frappe.get_all("Translation Reviewer", filters={"language":self.language, "user":self.user}):
+			frappe.throw(_("You have already applied for this language"), AlreadyApplied)
 
 	def get_recipients(self):
 		return frappe.db.get_all("Translation Reviewer", filters = {

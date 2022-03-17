@@ -1,57 +1,38 @@
 <template>
-  <Dialog :options="{ title: 'Add Team' }" v-model="showDialog">
+  <Dialog :options="{ title: 'Become a Reviewer' }" v-model="showDialog">
     <template #body-content>
-      <div class = "mt-5">
-        <label for="linkedin_url" class="block text-sm font-medium text-gray-700">Linkedin URL</label>
-        <div class="mt-1">
-          <input type="url" 
-            name="linkedin_url" 
+          <Input type="text"
+            name="linkedin_url"
             v-model="linkedin_url"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            label="Linkedin URL"
+            class="mb-2"
             placeholder="Linkedin URL" />
-        </div>
-      </div>
 
-      <div class = "mt-5">
-        <label for="github_url" class="block text-sm font-medium text-gray-700">Github URL</label>
-        <div class="mt-1">
-          <input type="url" 
-            name="github_url" 
+          <Input type="text"
+            name="github_url"
             v-model="github_url"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            label="Github URL"
+            class="mb-2"
             placeholder="Github URL" />
-        </div>
-      </div>
 
-      <div class = "mt-5">
-        <label for="portfolio_url" class="block text-sm font-medium text-gray-700">Portfolio URL</label>
-        <div class="mt-1">
-          <input type="url" 
-            name="portfolio_url" 
+          <Input type="text"
+            name="portfolio_url"
             v-model="portfolio_url"
-            class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-            placeholder="Portfolio URL" />
-        </div>
-      </div>
+            class="mb-2"
+            placeholder="Portfolio URL"
+            label="Portfolio URL" />
 
-      <div class = "mt-5">
-        <label for="reason" class="block text-sm font-medium text-gray-700">Reason</label>
-        <div class="mt-1">
-        <textarea
-          name="reason" 
-          v-model="reason"
-          class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-          placeholder="Reason"
-        />
-        </div>
-      </div>
-    <div class = "mt-5">
-
+          <Input type="textarea"
+            name="reason"
+            v-model="reason"
+            class="mb-2"
+            label="Reason"
+            placeholder="Reason"
+          />
     <SimpleComboBox ref="SimpleCombobox" @languageSelected="languageSelected"></SimpleComboBox>
-</div>
       <ErrorMessage
         class="mt-2"
-        :message="$resources.createReviewer.error"
+        :message="$resources.createReviewer.error.messages"
       />
     </template>
 

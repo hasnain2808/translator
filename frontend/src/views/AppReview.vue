@@ -11,16 +11,18 @@
 			<div>
 				<router-link
 					v-for="candidate in candidates"
-					class="block cursor-pointer rounded-md px-2.5"
-					:class="
-						selectedCandidate && selectedCandidate.name === candidate.name
-							? 'bg-gray-100'
-							: 'hover:bg-gray-50'
-					"
+					v-slot="{ route }"
+					
 					:key="candidate.name"
 					:to="`/apps/${app_name}/review/${candidate.name}`"
 				>
 					<ListItem
+					class="block cursor-pointer rounded-md px-2.5"
+					:class="
+							$route.fullPath.indexOf(route.fullPath) >= 0
+							? 'bg-gray-100'
+							: 'hover:bg-gray-50'
+					"
 						:title="` ${candidate.source_message}, translated to
 							${candidate.translated}
 						`"

@@ -12,7 +12,7 @@
 						<a
 							class="relative mr-8 block truncate border-b border-transparent px-1 py-4 font-medium leading-none focus:outline-none"
 							:class="[
-								isActive
+									$route.fullPath.indexOf(route.fullPath) >= 0
 									? 'border-brand text-gray-900'
 									: 'text-gray-600 hover:text-gray-900'
 							]"

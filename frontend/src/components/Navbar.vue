@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-	<Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
+	<Disclosure as="nav" class="border-b bg-white" v-slot="{ open }">
 		<div class="lg:container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex items-center justify-between h-16">
 				<div class="flex items-center">
@@ -20,11 +20,13 @@
 										rounded-md
 										text-sm
 										font-medium`,
-										isActive
-											? 'bg-gray-900 text-white'
-											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+										$route.fullPath.indexOf(route.fullPath) >= 0
+											? 'bg-blue-50 text-blue-500'
+											: 'text-gray-900 hover:bg-gray-50 ',
 									]"
-									>Apps  <Badge v-if="translated_messsages_for_verification_count" status="Pending">{{translated_messsages_for_verification_count}}</Badge></a
+									>Apps  
+									<Badge v-if="translated_messsages_for_verification_count" status="Pending">{{translated_messsages_for_verification_count}}</Badge>
+									</a
 								>
 							</router-link>
 							<router-link
@@ -40,9 +42,9 @@
 										rounded-md
 										text-sm
 										font-medium`,
-										isActive
-											? 'bg-gray-900 text-white'
-											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+										$route.fullPath.indexOf(route.fullPath) >= 0
+											? 'bg-blue-50 text-blue-500'
+											: 'text-gray-900 hover:bg-gray-50 ',
 									]"
 									>Reviewers  <Badge status="Pending">{{pending_reviewer_count}}</Badge>
 								</a>
@@ -60,9 +62,9 @@
 										rounded-md
 										text-sm
 										font-medium`,
-										isActive
-											? 'bg-gray-900 text-white'
-											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+										$route.fullPath.indexOf(route.fullPath) >= 0
+											? 'bg-blue-50 text-blue-500'
+											: 'text-gray-900 hover:bg-gray-50',
 									]"
 									>Your Applications
 								</a>
